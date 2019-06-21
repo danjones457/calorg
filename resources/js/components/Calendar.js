@@ -1,8 +1,10 @@
 import React from "react";
+import ReactDOM from 'react-dom';
 import dateFns from "date-fns";
 
 class Calendar extends React.Component {
-    constructor() {
+    constructor(props) {
+        super(props);
         this.state = {
             currentMonth: new Date(),
             selectedDate: new Date()
@@ -17,7 +19,7 @@ class Calendar extends React.Component {
                 <div className="col col-start">
                     <div className="icon" onClick={this.prevMonth}>
                         chevron_left
-          </div>
+                    </div>
                 </div>
                 <div className="col col-center">
                     <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
@@ -111,7 +113,6 @@ class Calendar extends React.Component {
     render() {
         return (
             <div className="calendar">
-                <span>test</span>
                 {this.renderHeader()}
                 {this.renderDays()}
                 {this.renderCells()}
