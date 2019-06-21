@@ -69437,15 +69437,39 @@ if (document.getElementById('calendar')) {
 
 /***/ }),
 
+/***/ "./resources/sass/calendar.scss":
+/*!**************************************!*\
+  !*** ./resources/sass/calendar.scss ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/sass/welcome.scss":
+/*!*************************************!*\
+  !*** ./resources/sass/welcome.scss ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!**************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/welcome.scss ./resources/sass/calendar.scss ***!
+  \**************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! D:\wamp64\www\calorg\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\wamp64\www\calorg\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\wamp64\www\calorg\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\wamp64\www\calorg\resources\sass\welcome.scss */"./resources/sass/welcome.scss");
+module.exports = __webpack_require__(/*! D:\wamp64\www\calorg\resources\sass\calendar.scss */"./resources/sass/calendar.scss");
 
 
 /***/ })
