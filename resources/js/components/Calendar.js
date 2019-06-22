@@ -1,13 +1,16 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import dateFns from "date-fns";
+import vars from "../vars.json";
 
 class Calendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             currentMonth: new Date(),
-            selectedDate: new Date()
+            selectedDate: new Date(),
+            startDate: new Date(),
+            endDate: new Date()
         }
     }
 
@@ -68,7 +71,7 @@ class Calendar extends React.Component {
                 const cloneDay = day;
                 days.push(
                     <div
-                        className={`col cell ${
+                        className={`col cell ${this.isSelected(day) ? "selectedDate" : ""}${
                             !dateFns.isSameMonth(day, monthStart)
                                 ? "disabled"
                                 : dateFns.isSameDay(day, selectedDate) ? "selected" : ""
@@ -92,11 +95,30 @@ class Calendar extends React.Component {
         return <div className="body">{rows}</div>;
     }
 
+    isSelected(day) {
+        if ((dateFns.isWithinRange(day, this.state.startDate, this.state.endDate)) || day === this.state.startDate) {
+            return true;
+        }
+        return false;
+    }
+
     onDateClick(day) {
         this.setState({
             selectedDate: day
         });
     };
+
+    setStartDate(){
+        this.setState({
+            startDate: this.state.selectedDate
+        });
+    }
+    
+    setEndDate() {
+        this.setState({
+            endDate: this.state.selectedDate
+        });
+    }
 
     nextMonth() {
         this.setState({
@@ -110,12 +132,36 @@ class Calendar extends React.Component {
         });
     };
 
+    addDates() {
+        fetch(vars.APP_URL && '/board/addDate', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            body: JSON.stringify({
+                startDate: dateFns.addDays(this.state.startDate, 1),
+                endDate: dateFns.addDays(this.state.endDate, 1)
+            }),
+        });
+    }
+
     render() {
         return (
-            <div className="calendar">
-                {this.renderHeader()}
-                {this.renderDays()}
-                {this.renderCells()}
+            <div>
+                <div>
+                    <button type="button" onClick={() => this.setStartDate()}>Set start date</button>
+                    <span>{dateFns.format(this.state.startDate, 'DD/MM/YYYY')}</span>
+                    <button type="button" onClick={() => this.setEndDate()}>Set end date</button>
+                    <span>{dateFns.format(this.state.endDate, 'DD/MM/YYYY')}</span>
+                    <button type="button" onClick={() => this.addDates()}>Add dates to group</button>
+                </div>
+                <div className="calendar">
+                    {this.renderHeader()}
+                    {this.renderDays()}
+                    {this.renderCells()}
+                </div>
             </div>
         );
     }

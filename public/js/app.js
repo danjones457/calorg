@@ -69256,6 +69256,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vars_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../vars.json */ "./resources/js/vars.json");
+var _vars_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../vars.json */ "./resources/js/vars.json", 1);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69278,6 +69280,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Calendar =
 /*#__PURE__*/
 function (_React$Component) {
@@ -69291,7 +69294,9 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Calendar).call(this, props));
     _this.state = {
       currentMonth: new Date(),
-      selectedDate: new Date()
+      selectedDate: new Date(),
+      startDate: new Date(),
+      endDate: new Date()
     };
     return _this;
   }
@@ -69357,7 +69362,7 @@ function (_React$Component) {
           formattedDate = date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.format(day, dateFormat);
           var cloneDay = day;
           days.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "col cell ".concat(!date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.isSameMonth(day, monthStart) ? "disabled" : date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.isSameDay(day, selectedDate) ? "selected" : ""),
+            className: "col cell ".concat(_this2.isSelected(day) ? "selectedDate" : "").concat(!date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.isSameMonth(day, monthStart) ? "disabled" : date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.isSameDay(day, selectedDate) ? "selected" : ""),
             key: day,
             onClick: function onClick() {
               return _this2.onDateClick(date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.parse(cloneDay));
@@ -69386,10 +69391,33 @@ function (_React$Component) {
       }, rows);
     }
   }, {
+    key: "isSelected",
+    value: function isSelected(day) {
+      if (date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.isWithinRange(day, this.state.startDate, this.state.endDate) || day === this.state.startDate) {
+        return true;
+      }
+
+      return false;
+    }
+  }, {
     key: "onDateClick",
     value: function onDateClick(day) {
       this.setState({
         selectedDate: day
+      });
+    }
+  }, {
+    key: "setStartDate",
+    value: function setStartDate() {
+      this.setState({
+        startDate: this.state.selectedDate
+      });
+    }
+  }, {
+    key: "setEndDate",
+    value: function setEndDate() {
+      this.setState({
+        endDate: this.state.selectedDate
       });
     }
   }, {
@@ -69407,11 +69435,44 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "addDates",
+    value: function addDates() {
+      fetch(_vars_json__WEBPACK_IMPORTED_MODULE_3__.APP_URL && '/board/addDate', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        body: JSON.stringify({
+          startDate: date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.addDays(this.state.startDate, 1),
+          endDate: date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.addDays(this.state.endDate, 1)
+        })
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      var _this3 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: function onClick() {
+          return _this3.setStartDate();
+        }
+      }, "Set start date"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.format(this.state.startDate, 'DD/MM/YYYY')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: function onClick() {
+          return _this3.setEndDate();
+        }
+      }, "Set end date"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.format(this.state.endDate, 'DD/MM/YYYY')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: function onClick() {
+          return _this3.addDates();
+        }
+      }, "Add dates to group")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "calendar"
-      }, this.renderHeader(), this.renderDays(), this.renderCells());
+      }, this.renderHeader(), this.renderDays(), this.renderCells()));
     }
   }]);
 
@@ -69423,6 +69484,17 @@ function (_React$Component) {
 if (document.getElementById('calendar')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Calendar, null), document.getElementById('calendar'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/vars.json":
+/*!********************************!*\
+  !*** ./resources/js/vars.json ***!
+  \********************************/
+/*! exports provided: APP_URL, default */
+/***/ (function(module) {
+
+module.exports = {"APP_URL":"http://localhost"};
 
 /***/ }),
 
