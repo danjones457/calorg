@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use DB;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $calendars = DB::table('calendars')->where('user_id', 1)->get();
+        return view('calendars', ['calendars' => $calendars]);
     }
 
     public function addDate(Request $request) {

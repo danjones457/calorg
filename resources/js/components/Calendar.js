@@ -169,7 +169,6 @@ class Calendar extends React.Component {
 
 export default Calendar;
 
-
 if (document.getElementById('calendar')) {
     ReactDOM.render(<Calendar />, document.getElementById('calendar'));
 }
