@@ -20,3 +20,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/calendar/{id}', 'HomeController@viewCalendar');
 Route::post('/board/addDate', 'HomeController@addDate');
+Route::post('/create', 'HomeController@createCalendar')->name('create');

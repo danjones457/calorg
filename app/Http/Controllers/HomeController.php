@@ -41,5 +41,15 @@ class HomeController extends Controller
         DB::table('calendar_dates')->insert([
             ['calendar_id' => $request->id, 'start_date' => $request->startDate, 'end_date' => $request->endDate]
         ]);
+        $calendar = DB::table('calendars')->where('id', $request->id)->get();
+        $calendar_dates = DB::table('calendar_dates')->where('calendar_id', $request->id)->get();
+        return view('home', ['calendar' => $calendar, 'calendar_dates' => $calendar_dates]);
+    }
+
+    public function createCalendar(Request $request) {
+        $id = DB::table('calendars')->insertGetId(
+            ['name' => $request->calendarName, 'user_id' => Auth::id()]
+        );
+        return redirect()->to('/calendar/'.$id);
     }
 }
