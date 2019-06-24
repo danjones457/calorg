@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div id="calendar"></div>
+                <div id="calendar" data-calendar='{{ $calendar }}' data-calendar_dates='{{ $calendar_dates }}'></div>
             </div>
         </div>
     </div>

@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Calendar from './calendar';
 
 class Calendars extends React.Component {
     constructor(props) {
@@ -14,9 +16,12 @@ class Calendars extends React.Component {
         let len = Object.keys(this.state.calendars).length;
 
         for (let i = 0; i < len; i++) {
+            var temp = '/calendar/'+this.state.calendars[i].id;
             list.push(
                 <p>
-                    {this.state.calendars[i].name}
+                    <a href={temp}>
+                        {this.state.calendars[i].name}
+                    </a>
                 </p>
             );
         }
@@ -26,9 +31,11 @@ class Calendars extends React.Component {
 
     render() {
         return (
-            <div>
-                {this.createList()}
-            </div>
+            <Router>
+                <div>
+                    {this.createList()}
+                </div>
+            </Router>
         );
     }
 }

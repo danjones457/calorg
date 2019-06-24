@@ -10,8 +10,10 @@ class Calendar extends React.Component {
             currentMonth: new Date(),
             selectedDate: new Date(),
             startDate: new Date(),
-            endDate: new Date()
-        }
+            endDate: new Date(),
+            calendar: JSON.parse(props.calendar),
+            calendarDates: JSON.parse(props.calendar_dates)
+        };
     }
 
     renderHeader() {
@@ -71,7 +73,7 @@ class Calendar extends React.Component {
                 const cloneDay = day;
                 days.push(
                     <div
-                        className={`col cell ${this.isSelected(day) ? "selectedDate" : ""}${
+                        className={`col cell ${this.isSelected(day) ? "selectedDate " : ""}${
                             !dateFns.isSameMonth(day, monthStart)
                                 ? "disabled"
                                 : dateFns.isSameDay(day, selectedDate) ? "selected" : ""
@@ -93,6 +95,22 @@ class Calendar extends React.Component {
             days = [];
         }
         return <div className="body">{rows}</div>;
+    }
+
+    renderDates() {
+        let list = [];
+        let len = Object.keys(this.state.calendarDates).length;
+
+        for (let i = 0; i < len; i++) {
+            list.push(
+                <p key={this.state.calendarDates[i].id}>
+                    <span>{dateFns.format(this.state.calendarDates[i].start_date, 'DD/MM/YYYY')}  -  </span>
+                    <span>{dateFns.format(this.state.calendarDates[i].end_date, 'DD/MM/YYYY')}</span>
+                </p>
+            );
+        }
+
+        return list;
     }
 
     isSelected(day) {
@@ -133,6 +151,10 @@ class Calendar extends React.Component {
     };
 
     addDates() {
+        var currentDate = dateFns.format(this.state.currentMonth, 'DD/MM/YYYY');
+        var formattedStart = dateFns.format(this.state.startDate, 'DD/MM/YYYY');
+        var formattedEnd = dateFns.format(this.state.endDate, 'DD/MM/YYYY');
+        var dateFormat = "YYYY-MM-DD HH:MM:SS";
         fetch(vars.APP_URL && '/board/addDate', {
             method: 'POST',
             headers: {
@@ -141,8 +163,9 @@ class Calendar extends React.Component {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             body: JSON.stringify({
-                startDate: dateFns.addDays(this.state.startDate, 1),
-                endDate: dateFns.addDays(this.state.endDate, 1)
+                id: this.state.calendar[0].id,
+                startDate: dateFns.format(formattedStart == currentDate ? this.state.startDate : dateFns.addDays(this.state.startDate, 1), dateFormat),
+                endDate: dateFns.format(formattedEnd == currentDate ? this.state.endDate : dateFns.addDays(this.state.endDate, 1), dateFormat)
             }),
         });
     }
@@ -150,12 +173,16 @@ class Calendar extends React.Component {
     render() {
         return (
             <div>
+                <p>{this.state.calendar[0].name}</p>
                 <div>
                     <button type="button" onClick={() => this.setStartDate()}>Set start date</button>
                     <span>{dateFns.format(this.state.startDate, 'DD/MM/YYYY')}</span>
                     <button type="button" onClick={() => this.setEndDate()}>Set end date</button>
                     <span>{dateFns.format(this.state.endDate, 'DD/MM/YYYY')}</span>
                     <button type="button" onClick={() => this.addDates()}>Add dates to group</button>
+                </div>
+                <div>
+                    {this.renderDates()}
                 </div>
                 <div className="calendar">
                     {this.renderHeader()}
@@ -170,5 +197,8 @@ class Calendar extends React.Component {
 export default Calendar;
 
 if (document.getElementById('calendar')) {
-    ReactDOM.render(<Calendar />, document.getElementById('calendar'));
+    const component = document.getElementById('calendar');
+    const props = Object.assign({}, component.dataset);
+
+    ReactDOM.render(<Calendar {...props} />, component);
 }

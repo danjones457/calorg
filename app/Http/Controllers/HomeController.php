@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use DB;
 
 class HomeController extends Controller
@@ -25,11 +26,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $calendars = DB::table('calendars')->where('user_id', 1)->get();
+        $calendars = DB::table('calendars')->where('user_id', Auth::id())->get();
         return view('calendars', ['calendars' => $calendars]);
     }
 
+    public function viewCalendar(Request $request, $id)
+    {
+        $calendar = DB::table('calendars')->where('id', $id)->get();
+        $calendar_dates = DB::table('calendar_dates')->where('calendar_id', $id)->get();
+        return view('home', ['calendar' => $calendar, 'calendar_dates' => $calendar_dates]);
+    }
+
     public function addDate(Request $request) {
-        Log::debug([$request->startDate, $request->endDate]);
+        DB::table('calendar_dates')->insert([
+            ['calendar_id' => $request->id, 'start_date' => $request->startDate, 'end_date' => $request->endDate]
+        ]);
     }
 }
