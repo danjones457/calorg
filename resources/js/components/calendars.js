@@ -18,7 +18,7 @@ class Calendars extends React.Component {
         for (let i = 0; i < len; i++) {
             var temp = '/calendar/'+this.state.calendars[i].id;
             list.push(
-                <p>
+                <p key={this.state.calendars[i].id}>
                     <a href={temp}>
                         {this.state.calendars[i].name}
                     </a>

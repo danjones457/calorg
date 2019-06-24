@@ -73526,7 +73526,9 @@ function (_React$Component) {
 
       for (var i = 0; i < len; i++) {
         var temp = '/calendar/' + this.state.calendars[i].id;
-        list.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        list.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          key: this.state.calendars[i].id
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: temp
         }, this.state.calendars[i].name)));
       }
