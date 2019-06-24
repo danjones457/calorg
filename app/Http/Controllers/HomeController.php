@@ -33,8 +33,11 @@ class HomeController extends Controller
     public function viewCalendar(Request $request, $id)
     {
         $calendar = DB::table('calendars')->where('id', $id)->get();
-        $calendar_dates = DB::table('calendar_dates')->where('calendar_id', $id)->get();
-        return view('home', ['calendar' => $calendar, 'calendar_dates' => $calendar_dates]);
+        if(Auth::id() === $calendar->first()->user_id) {
+            $calendar_dates = DB::table('calendar_dates')->where('calendar_id', $id)->get();
+            return view('home', ['calendar' => $calendar, 'calendar_dates' => $calendar_dates]);
+        }
+        return view('notforyou');
     }
 
     public function addDate(Request $request) {
