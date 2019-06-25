@@ -14,7 +14,7 @@ class UpdateCalendarsTableWithOtherUsersColumn extends Migration
     public function up()
     {
         Schema::table('calendars', function (Blueprint $table) {
-            $table->json('other_users')->after('user_id')->nullable($value = true);
+            $table->json('other_users')->after('user_id');
         });
     }
 

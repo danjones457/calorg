@@ -33,10 +33,12 @@ class HomeController extends Controller
     public function viewCalendar(Request $request, $id)
     {
         $calendar = DB::table('calendars')->where('id', $id)->get();
-        if(Auth::id() === $calendar->first()->user_id) {
+
+        if(Auth::id() === $calendar->first()->user_id || ($calendar->first()->other_users != null ? in_array(Auth::id(), json_decode($calendar->first()->other_users, true)["users"]) : false)) {
             $calendar_dates = DB::table('calendar_dates')->where('calendar_id', $id)->get();
             return view('home', ['calendar' => $calendar, 'calendar_dates' => $calendar_dates]);
         }
+
         return view('notforyou');
     }
 
@@ -51,7 +53,7 @@ class HomeController extends Controller
 
     public function createCalendar(Request $request) {
         $id = DB::table('calendars')->insertGetId(
-            ['name' => $request->calendarName, 'user_id' => Auth::id()]
+            ['name' => $request->calendarName, 'user_id' => Auth::id(), 'other_users' => '{"users": []}']
         );
         return redirect()->to('/calendar/'.$id);
     }
