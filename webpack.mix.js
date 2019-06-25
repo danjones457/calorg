@@ -17,4 +17,5 @@ mix.react('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .sass('resources/sass/welcome.scss', 'public/css')
    .sass('resources/sass/calendar.scss', 'public/css')
+   .sass('resources/sass/calendars.scss', 'public/css')
    ;

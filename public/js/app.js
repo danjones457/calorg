@@ -73527,10 +73527,14 @@ function (_React$Component) {
       for (var i = 0; i < len; i++) {
         var temp = '/calendar/' + this.state.calendars[i].id;
         list.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          key: this.state.calendars[i].id
+          key: this.state.calendars[i].id,
+          className: "calendar"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: temp
-        }, this.state.calendars[i].name)));
+          href: temp,
+          className: "calendarSelect"
+        }, this.state.calendars[i].name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          className: "addUser"
+        }, "Add users")));
       }
 
       return list;
@@ -73588,6 +73592,17 @@ module.exports = {"APP_URL":"http://localhost"};
 
 /***/ }),
 
+/***/ "./resources/sass/calendars.scss":
+/*!***************************************!*\
+  !*** ./resources/sass/calendars.scss ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/welcome.scss":
 /*!*************************************!*\
   !*** ./resources/sass/welcome.scss ***!
@@ -73600,16 +73615,17 @@ module.exports = {"APP_URL":"http://localhost"};
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/welcome.scss ./resources/sass/calendar.scss ***!
-  \**************************************************************************************************************************/
+/*!**********************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/welcome.scss ./resources/sass/calendar.scss ./resources/sass/calendars.scss ***!
+  \**********************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! D:\wamp64\www\calorg\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! D:\wamp64\www\calorg\resources\sass\app.scss */"./resources/sass/app.scss");
 __webpack_require__(/*! D:\wamp64\www\calorg\resources\sass\welcome.scss */"./resources/sass/welcome.scss");
-module.exports = __webpack_require__(/*! D:\wamp64\www\calorg\resources\sass\calendar.scss */"./resources/sass/calendar.scss");
+__webpack_require__(/*! D:\wamp64\www\calorg\resources\sass\calendar.scss */"./resources/sass/calendar.scss");
+module.exports = __webpack_require__(/*! D:\wamp64\www\calorg\resources\sass\calendars.scss */"./resources/sass/calendars.scss");
 
 
 /***/ })
