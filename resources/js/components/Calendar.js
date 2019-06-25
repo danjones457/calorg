@@ -154,7 +154,7 @@ class Calendar extends React.Component {
         var currentDate = dateFns.format(this.state.currentMonth, 'DD/MM/YYYY');
         var formattedStart = dateFns.format(this.state.startDate, 'DD/MM/YYYY');
         var formattedEnd = dateFns.format(this.state.endDate, 'DD/MM/YYYY');
-        var dateFormat = "YYYY-MM-DD HH:MM:SS";
+        var dateFormat = "YYYY-MM-DD";
         fetch(vars.APP_URL && '/board/addDate', {
             method: 'POST',
             headers: {
@@ -164,8 +164,8 @@ class Calendar extends React.Component {
             },
             body: JSON.stringify({
                 id: this.state.calendar[0].id,
-                startDate: dateFns.format(formattedStart == currentDate ? this.state.startDate : dateFns.addDays(this.state.startDate, 1), dateFormat),
-                endDate: dateFns.format(formattedEnd == currentDate ? this.state.endDate : dateFns.addDays(this.state.endDate, 1), dateFormat)
+                startDate: dateFns.format(formattedStart == currentDate ? this.state.startDate : dateFns.addDays(this.state.startDate, 1), dateFormat) + ' 00:00:00',
+                endDate: dateFns.format(formattedEnd == currentDate ? this.state.endDate : dateFns.addDays(this.state.endDate, 1), dateFormat) + ' 00:00:00'
             }),
         });
     }

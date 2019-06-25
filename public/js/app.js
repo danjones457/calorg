@@ -73409,7 +73409,7 @@ function (_React$Component) {
       var currentDate = date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.format(this.state.currentMonth, 'DD/MM/YYYY');
       var formattedStart = date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.format(this.state.startDate, 'DD/MM/YYYY');
       var formattedEnd = date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.format(this.state.endDate, 'DD/MM/YYYY');
-      var dateFormat = "YYYY-MM-DD HH:MM:SS";
+      var dateFormat = "YYYY-MM-DD";
       fetch(_vars_json__WEBPACK_IMPORTED_MODULE_3__.APP_URL && '/board/addDate', {
         method: 'POST',
         headers: {
@@ -73419,8 +73419,8 @@ function (_React$Component) {
         },
         body: JSON.stringify({
           id: this.state.calendar[0].id,
-          startDate: date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.format(formattedStart == currentDate ? this.state.startDate : date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.addDays(this.state.startDate, 1), dateFormat),
-          endDate: date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.format(formattedEnd == currentDate ? this.state.endDate : date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.addDays(this.state.endDate, 1), dateFormat)
+          startDate: date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.format(formattedStart == currentDate ? this.state.startDate : date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.addDays(this.state.startDate, 1), dateFormat) + ' 00:00:00',
+          endDate: date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.format(formattedEnd == currentDate ? this.state.endDate : date_fns__WEBPACK_IMPORTED_MODULE_2___default.a.addDays(this.state.endDate, 1), dateFormat) + ' 00:00:00'
         })
       });
     }
