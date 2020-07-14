@@ -8,7 +8,7 @@ Their friends then insert dates they are available and the system would then ret
 
 ## The problem
 
-When trying to organise an event with friends it can often be difficult to find a date that everyone is available to attend that event.
+When trying to organise an event with friends it can often be difficult to find a date that everyone is available to attend.
 
 ## The solution
 
